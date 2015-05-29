@@ -22,19 +22,19 @@ package cpd4414.assign2;
  * @author Len Payne <len.payne@lambtoncollege.ca>
  */
 public class Purchase {
-    private String productId;
+    private int productId;
     private int quantity;
 
-    public Purchase(String productId, int quantity) {
+    public Purchase(int productId, int quantity) {
         this.productId = productId;
         this.quantity = quantity;
     }
     
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
