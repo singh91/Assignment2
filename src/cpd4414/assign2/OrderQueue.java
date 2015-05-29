@@ -38,6 +38,10 @@ public class OrderQueue {
         orderQueue.add(order);
         order.setTimeReceived(new Date());
   }
+
+    Order next() {
+        return orderQueue.peek();
+                }
       public class NoCustomerException extends Exception {
 
         public NoCustomerException() {
