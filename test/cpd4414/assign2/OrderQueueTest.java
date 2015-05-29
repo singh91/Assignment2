@@ -184,4 +184,20 @@ public class OrderQueueTest {
 
         assertTrue(didThrow);
     }
+        @Test
+    public void testFulfillWhenTimeProcessedNotSetThenThrowException() throws OrderQueue.NoCustomerException, OrderQueue.NoPurchasesException, OrderQueue.NoTimeReceivedException {
+        boolean didThrow = false;
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("SomeValues", "OtherValues");
+        order.addPurchase(new Purchase(1, 8));
+        orderQueue.add(order);
+
+        try {
+            orderQueue.fulfill(order);
+        } catch (OrderQueue.NoTimeProcessedException ex) {
+            didThrow = true;
+        }
+
+        assertTrue(didThrow);
+    }
 }
