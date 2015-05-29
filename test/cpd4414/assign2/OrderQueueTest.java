@@ -98,7 +98,7 @@ public class OrderQueueTest {
     }
     
         @Test
-    public void () throws OrderQueue.NoCustomerException, OrderQueue.NoPurchasesException {
+    public void testGetNextWhenOrdersInSystemThenGetNextAvailable() throws OrderQueue.NoCustomerException, OrderQueue.NoPurchasesException {
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("SomeValues", "OtherValues");
         order.addPurchase(new Purchase("SomeID", 8));
@@ -110,5 +110,12 @@ public class OrderQueueTest {
         Order result = orderQueue.next();
         assertEquals(result, order);
         assertNull(result.getTimeProcessed());
+    }
+        @Test
+    public void testGetNextWhenNoOrdersInSystemThenReturnNull() throws OrderQueue.NoCustomerException, OrderQueue.NoPurchasesException {
+        OrderQueue orderQueue = new OrderQueue();
+
+        Order result = orderQueue.next();
+        assertNull(result);
     }
 }
