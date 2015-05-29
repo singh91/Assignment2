@@ -17,9 +17,11 @@
 
 package cpd4414.assign2;
 
-import cpd4414.assign2.OrderQueue;
-import cpd4414.assign2.Purchase;
 import cpd4414.assign2.Order;
+import cpd4414.assign2.OrderQueue;
+import cpd4414.assign2.OrderQueue.NoCustomerException;
+import cpd4414.assign2.OrderQueue.NoPurchasesException;
+import cpd4414.assign2.Purchase;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -54,7 +56,7 @@ public class OrderQueueTest {
     }
 
     @Test
-    public void testWhenCustomerExistsAndPurchasesExistThenTimeReceivedIsNow() {
+    public void testWhenCustomerExistsAndPurchasesExistThenTimeReceivedIsNow() throws Exception {
         OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("CUST00001", "ABC Cafeteria");
         order.addPurchase(new Purchase("PROD0004", 450));
@@ -66,7 +68,7 @@ public class OrderQueueTest {
         assertTrue(Math.abs(result - expResult) < 1000);
     }
     @Test
-    public void testWhenNoCustomerExistsThenThrownAnException() {
+    public void testWhenNoCustomerExistsThenThrownAnException() throws NoCustomerException, NoPurchasesException {
         boolean didThrow = false;
             OrderQueue orderQueue = new OrderQueue();
         Order order = new Order("", "");
@@ -76,9 +78,22 @@ public class OrderQueueTest {
            
             orderQueue.add(order);
         }
-        catch(Exception ex){
+        catch(NoCustomerException ex){
             didThrow = true;
         }
+        assertTrue(didThrow);
+    }
+        @Test
+    public void testWhenNoPurchasesThenThrowAnException() throws OrderQueue.NoCustomerException {
+        boolean didThrow = false;
+        OrderQueue orderQueue = new OrderQueue();
+        Order order = new Order("SomeNormal", "Order");
+        try {
+            orderQueue.add(order);
+        } catch (NoPurchasesException ex) {
+            didThrow = true;
+        }
+
         assertTrue(didThrow);
     }
 }
